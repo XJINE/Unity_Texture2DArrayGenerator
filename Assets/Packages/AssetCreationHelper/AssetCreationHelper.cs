@@ -3,6 +3,7 @@
 using UnityEditor;
 using UnityEngine;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 public static class AssetCreationHelper
 {
@@ -18,7 +19,7 @@ public static class AssetCreationHelper
 
     #region Constructor
 
-    static AssetCreationHelper() 
+    static AssetCreationHelper()
     {
         AssetCreationHelper.UnityEditor       = Assembly.Load("UnityEditor");
         AssetCreationHelper.ProjectBrowser    = AssetCreationHelper.UnityEditor.GetType("UnityEditor.ProjectBrowser");
@@ -35,19 +36,24 @@ public static class AssetCreationHelper
 
     #region Method
 
-    public static string CreateAssetInCurrentDirectory(Object asset, string nameWithExtension)
+    public static string CreateAssetInCurrentDirectory(Object asset, string nameWithExtension, bool overwrite = false)
     {
-        return CreateAssetInCurrentDirectory<Object>(asset, nameWithExtension);
+        return CreateAssetInCurrentDirectory<Object>(asset, nameWithExtension, overwrite);
     }
 
-    public static string CreateAssetInCurrentDirectory(string asset, string nameWithExtension)
+    public static string CreateAssetInCurrentDirectory(string asset, string nameWithExtension, bool overwrite = false)
     {
-        return CreateAssetInCurrentDirectory<string>(asset, nameWithExtension);
+        return CreateAssetInCurrentDirectory<string>(asset, nameWithExtension, overwrite);
     }
 
-    private static string CreateAssetInCurrentDirectory<T>(object asset, string nameWithExtension)
+    private static string CreateAssetInCurrentDirectory<T>(object asset, string nameWithExtension, bool overwrite)
     {
         string path = GetCurrentAssetDirectoryPathRelative() + "/" + nameWithExtension;
+
+        if (!overwrite)
+        {
+            path = CorrectAssetNameToAvoidOverwrite(path);
+        }
 
         if (typeof(T) == typeof(Object))
         {
@@ -108,7 +114,39 @@ public static class AssetCreationHelper
         return path;
     }
 
-    public static void StartToRenameAsset(string assetPath) 
+    public static string CorrectAssetNameToAvoidOverwrite(string assetPath)
+    {
+        // NOTE:
+        // This assetPath has extension.
+
+        string tempPath  = "";
+        string suffixNum = "";
+        string extension = System.IO.Path.GetExtension(assetPath);
+               assetPath = assetPath.Remove(assetPath.Length - extension.Length, extension.Length);
+
+        Regex regex = new Regex(@"(?<assetPath>) (?<suffixNum>\d+)");
+        Match match = regex.Match(assetPath);
+
+        if (match.Success)
+        {
+            assetPath = match.Groups["assetPath"].Value;
+            suffixNum = match.Groups["suffixNum"].Value;
+        }
+
+        while (true)
+        {
+            tempPath = assetPath + (string.IsNullOrEmpty(suffixNum) ? "" : " " + suffixNum) + extension;
+
+            if (!System.IO.File.Exists(tempPath))
+            {
+                return tempPath;
+            }
+
+            suffixNum = string.IsNullOrEmpty(suffixNum) ? "1" : (int.Parse(suffixNum) + 1).ToString();
+        }
+    }
+
+    public static void StartToRenameAsset(string assetPath)
     {
         StartToRenameAsset(AssetDatabase.LoadAssetAtPath<Object>(assetPath));
     }
