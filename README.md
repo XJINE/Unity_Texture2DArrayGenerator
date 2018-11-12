@@ -23,7 +23,6 @@ And then, it returns ``Texture2DArray`` instance.
 
 ```csharp
 public static Texture2DArray Texture2DArrayGenerator.Generate(IList<Texture2D> textures)
-}
 ```
 
 ### Use as Asset
