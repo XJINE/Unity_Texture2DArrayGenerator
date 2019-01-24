@@ -9,6 +9,8 @@ public class Texture2DArrayGeneratorEditor : EditorWindow
 
     public string fileName = "tex2darray.asset";
 
+    public TextureFormat format = TextureFormat.ARGB32;
+
     public Texture2D[] textures;
 
     #endregion Field
@@ -30,16 +32,18 @@ public class Texture2DArrayGeneratorEditor : EditorWindow
         if (GUILayout.Button("Generate"))
         {
             string path = AssetCreationHelper.CreateAssetInCurrentDirectory
-                          (Texture2DArrayGenerator.Generate(this.textures), this.fileName);
+                          (Texture2DArrayGenerator.Generate(this.textures, this.format), this.fileName);
 
             ShowNotification(new GUIContent("SUCCESS : " + path));
         }
 
         this.fileName = EditorGUILayout.TextField("File Name", this.fileName);
 
-        SerializedObject scriptableObject = new SerializedObject(this);
-        EditorGUILayout.PropertyField(scriptableObject.FindProperty("textures"), true);
-        scriptableObject.ApplyModifiedProperties();
+        this.format = (TextureFormat)EditorGUILayout.EnumPopup("Format", this.format);
+
+        SerializedObject serializedObject = new SerializedObject(this);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("textures"), true);
+        serializedObject.ApplyModifiedProperties();
     }
 
     #endregion Method
