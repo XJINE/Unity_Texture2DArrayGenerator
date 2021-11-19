@@ -6,8 +6,6 @@ Texture2DArrayGenerator provides function or editor to make a ``Texture2DArray``
 
 You can import this asset from UnityPackage.
 
-- [Texture2DArrayGenerator.unitypackage](https://github.com/XJINE/Unity_Texture2DArrayGenerator/blob/master/Texture2DArrayGenerator.unitypackage)
-
 ### Dependencies
 
 You have to import following assets to use this asset.
@@ -34,5 +32,9 @@ If you need ``Texture2DArray`` as pre-compiled asset. It can be made from Custom
 Pass the textures to CustomWindow and press the Generate button.
 Then, Texture2D asset will be generated in current ``Assets`` dir.
 
-If you succeed in generate, a popup will be shown in CustomWindow.
-If you failed to generate, some error message will be shown in Console.
+When succeed in generate, a popup will be shown in CustomWindow.
+
+When failed to generate, some error message will be shown in Console.
+
+If failed, edit ``Texture2DArrayGenerator`` code.
+Texure2DArray has lot of condition to generate it.
