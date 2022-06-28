@@ -1,0 +1,19 @@
+{
+    "name"       : "com.xjine.texture_2darray_generator",
+    "displayName": "Texture2DArray Generator", 
+    "version"    : "1.0.1",
+    "unity"      : "2021.3",
+    "description": "Texture2DArrayGenerator provides function or editor to make a Texture2DArray.",
+    "author"     :
+    {
+        "name": "XJINE",
+        "url" : "https://github.com/XJINE"
+    },
+    "keywords":
+    [
+        "Texture"
+    ],
+    "dependencies":
+    {
+    }
+}

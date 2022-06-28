@@ -1,0 +1,16 @@
+{
+    "name": "Texture2DArrayGenerator",
+    "rootNamespace": "",
+    "references": [
+        "GUID:463c53276429d364db9fee5b8cafb1b9"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
