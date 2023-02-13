@@ -10,8 +10,6 @@ You can use Package Manager or import it directly.
 https://github.com/XJINE/Unity_Texture2DArrayGenerator.git?path=Assets/Packages/Texture2DArrayGenerator
 ```
 
-NOTE: Because of the limitation of UnityPackageManager, it needs to install dependencies manually.
-
 ### Dependencies
 
 This project use following resources.
